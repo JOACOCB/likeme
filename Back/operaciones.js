@@ -33,4 +33,31 @@ const agregarPosts = async (titulo,img,descripcion,likes) => {
     }
 };
 
-module.exports = { obtenerPosts, agregarPosts }
+const actualizarPosts = async ( id ) => {
+    try{
+        const consulta = "UPDATE posts SET likes = likes + 1 WHERE id = $1";
+        const parametros = [id];
+        await pool.query (consulta, parametros)
+    } catch (e){
+        console.error("Error al cambiar los datos:", error);
+    throw e;
+    }
+};
+
+const borrarPosts = async ( id ) => {
+    try{
+        const consulta = "DELETE FROM posts WHERE id=$1"
+        const parametros = [id];
+        await pool.query (consulta, parametros)
+
+    } catch (e){
+        console.error("Error al eliminar el post:", error);
+    throw e;
+
+    }
+};
+
+
+
+
+module.exports = { obtenerPosts, agregarPosts, actualizarPosts, borrarPosts }
